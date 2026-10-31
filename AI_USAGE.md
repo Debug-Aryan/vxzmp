@@ -16,6 +16,6 @@ This project was developed for the **REint / GridBricks** internship assessment 
 All generated code, analytical rules, and configurations were subject to rigorous manual review and testing:
 - **Zero TypeScript Policy**: Verified that no `.ts`, `.tsx`, or `tsconfig.json` files exist in the active frontend.
 - **Mathematical Integrity**: Validated the precision of MAE, RMSE, WAPE, and Bias against known test vectors in Pytest.
-- **Live Ingestion Validation**: Validated against live Elexon BMRS data for the target period of **January 2026** (ingesting 960 actual records and 4,672 forecast records).
+- **Live Ingestion Validation**: Validated against live Elexon BMRS data across development phases, distinguishing an initial single-day sanity probe (960 raw actual records across 20 fuel types, 48 wind records, and 4,672 forecast versions) from the comprehensive full-month January 2026 backtest (29,760 raw actual records yielding exactly 1,488 wind settlement outturns, and 22,192 forecast records across 744 hourly horizons).
 - **Automated Testing**: 17 automated tests passing with 100% success rate across API validation, stream normalization, and edge case handling.
 
