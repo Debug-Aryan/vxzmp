@@ -21,6 +21,16 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  // Reset day selection when the selected month changes
+  const handleMonthChange = useCallback((newMonth) => {
+    setMonth(newMonth)
+    setDayFilter('all')
+  }, [])
+
+  useEffect(() => {
+    setDayFilter('all')
+  }, [month])
+
   const loadAnalysis = useCallback(async () => {
     setLoading(true)
     setError('')
@@ -111,7 +121,7 @@ export default function App() {
 
           <FilterBar
             month={month}
-            setMonth={setMonth}
+            setMonth={handleMonthChange}
             decisionHour={decisionHour}
             setDecisionHour={setDecisionHour}
             dayFilter={dayFilter}

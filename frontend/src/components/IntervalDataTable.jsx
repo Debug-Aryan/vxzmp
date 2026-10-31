@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { formatMw, formatUkDateTime, formatUtcDateTime } from '../utils/formatters'
 
 const PAGE_SIZE = 48
@@ -8,10 +8,18 @@ export function IntervalDataTable({ rows }) {
 
   const totalRows = rows?.length ?? 0
   const totalPages = Math.max(1, Math.ceil(totalRows / PAGE_SIZE))
-  const pageRows = rows?.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE) ?? []
+  const safePage = Math.min(Math.max(1, currentPage), totalPages)
+  const pageRows = rows?.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE) ?? []
 
-  const handlePrev = () => setCurrentPage((p) => Math.max(1, p - 1))
-  const handleNext = () => setCurrentPage((p) => Math.min(totalPages, p + 1))
+  // Ensure current page stays clamped within available pages when rows are filtered
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1)
+    }
+  }, [totalPages, currentPage])
+
+  const handlePrev = () => setCurrentPage(Math.max(1, safePage - 1))
+  const handleNext = () => setCurrentPage(Math.min(totalPages, safePage + 1))
 
   return (
     <section className="panel p-5 mb-8">
@@ -89,25 +97,31 @@ export function IntervalDataTable({ rows }) {
       {/* Pagination Footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500">
         <span>
-          Showing intervals {(currentPage - 1) * PAGE_SIZE + 1}–
-          {Math.min(currentPage * PAGE_SIZE, totalRows)} of {totalRows.toLocaleString('en-GB')}
+          {totalRows > 0 ? (
+            <>
+              Showing intervals {(safePage - 1) * PAGE_SIZE + 1}–
+              {Math.min(safePage * PAGE_SIZE, totalRows)} of {totalRows.toLocaleString('en-GB')}
+            </>
+          ) : (
+            'Showing 0 intervals'
+          )}
         </span>
         {totalPages > 1 && (
           <div className="flex items-center gap-2">
             <button
               className="btn-outline py-1 px-2.5 text-[11px]"
               onClick={handlePrev}
-              disabled={currentPage === 1}
+              disabled={safePage === 1}
             >
               Previous
             </button>
             <span className="text-[11px] font-medium text-slate-600 px-1">
-              Page {currentPage} of {totalPages}
+              Page {safePage} of {totalPages}
             </span>
             <button
               className="btn-outline py-1 px-2.5 text-[11px]"
               onClick={handleNext}
-              disabled={currentPage === totalPages}
+              disabled={safePage === totalPages}
             >
               Next
             </button>
