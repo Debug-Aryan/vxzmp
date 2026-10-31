@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -15,28 +14,58 @@ import { formatMw } from '../utils/formatters'
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload || !payload.length) return null
 
+  const rowData = payload[0]?.payload
+  const actualVal = rowData?.actual
+  const forecastVal = rowData?.forecast
+
+  // Calculate signed error: Error = Forecast - Actual
+  const errorVal =
+    rowData?.error != null
+      ? rowData.error
+      : forecastVal != null && actualVal != null
+      ? forecastVal - actualVal
+      : null
+
+  const isOver = errorVal != null && errorVal > 0
+  const isUnder = errorVal != null && errorVal < 0
+  const errorBadgeColor = isOver
+    ? 'text-amber-800 bg-amber-50 border-amber-200'
+    : isUnder
+    ? 'text-blue-800 bg-blue-50 border-blue-200'
+    : 'text-slate-600 bg-slate-50 border-slate-200'
+
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-xl text-xs">
-      <div className="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1">
-        {label} (UK local time)
+    <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-xl text-xs min-w-[220px]">
+      <div className="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1.5 flex items-center justify-between">
+        <span>{label}</span>
+        <span className="text-[10px] text-slate-400 font-normal">UK local</span>
       </div>
       {payload.map((entry) => (
         <div
           key={entry.dataKey}
-          className="flex items-center gap-2.5 my-1 text-xs font-semibold"
+          className="flex items-center gap-2.5 my-1.5 text-xs font-semibold"
         >
           <span
-            className="w-2.5 h-2.5 rounded-full"
+            className="w-2.5 h-2.5 rounded-full flex-shrink-0"
             style={{ backgroundColor: entry.color }}
           />
           <span className="text-slate-500 font-medium">
             {entry.name === 'actual' ? 'Actual Generation:' : 'Eligible Forecast:'}
           </span>
-          <span className="ml-auto text-slate-900 font-bold">
+          <span className="ml-auto text-slate-900 font-bold font-mono">
             {formatMw(entry.value)} MW
           </span>
         </div>
       ))}
+
+      {errorVal != null && (
+        <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span className="text-slate-500 font-medium">Signed Error (F - A):</span>
+          <span className={`px-2 py-0.5 rounded font-bold font-mono text-xs border ${errorBadgeColor}`}>
+            {errorVal > 0 ? '+' : ''}{formatMw(errorVal)} MW
+          </span>
+        </div>
+      )}
     </div>
   )
 }
@@ -88,13 +117,6 @@ export function ForecastChart({ chartRows, loading }) {
                 tickFormatter={(v) => `${v.toLocaleString('en-GB')}`}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Legend
-                verticalAlign="bottom"
-                height={32}
-                formatter={(val) =>
-                  val === 'actual' ? 'Actual Generation (MW)' : 'Eligible Forecast (MW)'
-                }
-              />
               <Line
                 type="monotone"
                 dataKey="actual"

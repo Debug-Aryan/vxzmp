@@ -17,6 +17,7 @@ export default function App() {
   const [month, setMonth] = useState('2026-01')
   const [decisionHour, setDecisionHour] = useState(12)
   const [dayFilter, setDayFilter] = useState('all')
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -98,10 +99,13 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-800">
-      <Sidebar />
+      <Sidebar
+        mobileOpen={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
+      />
 
       <div className="flex-1 min-w-0 flex flex-col">
-        <Topbar />
+        <Topbar onOpenMobileNav={() => setMobileNavOpen(true)} />
 
         <main className="flex-1 px-4 sm:px-8 py-6 max-w-7xl w-full mx-auto">
           {/* Page Heading */}

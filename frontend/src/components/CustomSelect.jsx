@@ -31,7 +31,7 @@ export function CustomSelect({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full h-10 px-3 py-2 text-xs text-slate-800 bg-white border border-slate-300 rounded-lg shadow-2xs hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 flex items-center justify-between gap-2.5 transition-all text-left"
+        className="w-full h-10 px-3 py-2 text-xs text-slate-800 bg-white border border-slate-300 rounded-lg shadow-2xs hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 flex items-center justify-between gap-2.5 transition-all text-left cursor-pointer"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
@@ -63,7 +63,7 @@ export function CustomSelect({
                     onChange(opt.value)
                     setIsOpen(false)
                   }}
-                  className={`w-full px-3 py-2 flex items-center justify-between text-left transition-colors ${
+                  className={`w-full px-3 py-2 flex items-center justify-between text-left transition-colors cursor-pointer ${
                     isSelected
                       ? 'bg-teal-50/80 text-teal-900 font-semibold'
                       : 'text-slate-700 hover:bg-slate-50'

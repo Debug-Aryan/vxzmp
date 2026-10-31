@@ -8,9 +8,12 @@ export function LoadingPanel() {
       <b className="text-slate-800 text-sm font-semibold">
         Fetching Elexon streams and computing quantitative forecast accuracy…
       </b>
-      <span className="text-xs text-slate-500 max-w-md">
+      <span className="text-xs text-slate-500 max-w-md leading-relaxed">
         Retrieving national wind generation (FUELHH) and publication-window forecasts (WINDFOR) for the selected period.
       </span>
+      <div className="mt-1 px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-600 max-w-md text-center leading-relaxed">
+        ⏱️ Initial live data ingestion from Elexon BMRS may take approximately 10–15 seconds. Subsequent decision-cutoff recalculations utilize in-memory cached streams and update almost instantly.
+      </div>
     </div>
   )
 }

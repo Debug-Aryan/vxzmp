@@ -59,7 +59,7 @@ export function CustomMonthPicker({ value = '2026-01', onChange, className = '' 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full h-10 px-3 py-2 text-xs text-slate-800 bg-white border border-slate-300 rounded-lg shadow-2xs hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 flex items-center justify-between gap-2.5 transition-all text-left"
+        className="w-full h-10 px-3 py-2 text-xs text-slate-800 bg-white border border-slate-300 rounded-lg shadow-2xs hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 flex items-center justify-between gap-2.5 transition-all text-left cursor-pointer"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
       >
@@ -85,7 +85,7 @@ export function CustomMonthPicker({ value = '2026-01', onChange, className = '' 
             <button
               type="button"
               onClick={() => setViewYear((y) => Math.max(2020, y - 1))}
-              className="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors"
+              className="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors cursor-pointer"
               title="Previous Year"
             >
               <ChevronLeft size={15} />
@@ -96,7 +96,7 @@ export function CustomMonthPicker({ value = '2026-01', onChange, className = '' 
             <button
               type="button"
               onClick={() => setViewYear((y) => Math.min(2026, y + 1))}
-              className="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors"
+              className="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors cursor-pointer"
               title="Next Year"
             >
               <ChevronRight size={15} />
@@ -112,7 +112,7 @@ export function CustomMonthPicker({ value = '2026-01', onChange, className = '' 
                   key={mName}
                   type="button"
                   onClick={() => handleSelectMonth(idx)}
-                  className={`h-9 rounded-lg font-medium text-xs flex items-center justify-center transition-all ${
+                  className={`h-9 rounded-lg font-medium text-xs flex items-center justify-center transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-teal-700 text-white font-bold shadow-sm'
                       : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
@@ -134,7 +134,7 @@ export function CustomMonthPicker({ value = '2026-01', onChange, className = '' 
                 setViewYear(2026)
                 setIsOpen(false)
               }}
-              className="text-teal-700 hover:text-teal-800 font-bold uppercase tracking-wider"
+              className="text-teal-700 hover:text-teal-800 font-bold uppercase tracking-wider cursor-pointer"
             >
               Jan 2026
             </button>

@@ -32,7 +32,7 @@ export function FilterBar({
     const list = [
       {
         value: 'all',
-        label: `All Days (${dayOptions.length} intervals)`,
+        label: `All Days (${dayOptions.length} days)`,
       },
     ]
 

@@ -49,12 +49,18 @@ body {
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-outline:hover:not(:disabled) {
   background-color: #f8fafc;
   border-color: #94a3b8;
+}
+
+.btn-outline:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .btn-primary {
@@ -69,11 +75,25 @@ body {
   background-color: #0f766e;
   border: 1px solid #0f766e;
   border-radius: 0.5rem;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-primary:hover:not(:disabled) {
   background-color: #115e59;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 .input-select {
